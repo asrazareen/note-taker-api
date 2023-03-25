@@ -53,7 +53,7 @@ body('password').isLength({ min: 6, max: 12 })
         if(password != conPassword){
             return res.status(400).json({
                 message:"Password and Confirm Password should be same"
-            })
+            }) 
             }
         console.log(req.body)
         const user = await User.findOne({ email });

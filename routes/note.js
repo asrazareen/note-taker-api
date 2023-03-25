@@ -55,8 +55,52 @@ router.get("/", async (req, res) => {
     //console.log(notes)
     res.status(200).json({
         data:notes
+    }) 
+}) 
+
+router.delete("/delete" , async (req,res) => {
+    const query = req.query.id
+    console.log(query)
+    await Note.deleteOne({_id:query})
+
+    res.json({
+        message:"Deleted successfully"
     })
 })
+router.get("/update" , async (req,res) => {
+    const query = req.query.id
+    //console.log(query)
+    const data = await Note.findOne({_id:query})
+    res.status(200).json({
+        data
+    })
+//console.l
+})
+router.put("/update" , async (req,res) => {
+    const query = req.query.id
+    //console.log(query)
+    const { title , description} = req.body
+    console.log(req.body)
+    const today = Date.now()
+        const date = new Date(today)
+        const now = date.toDateString()
+        const user = req.user
+    const data = await Note.updateOne({ _id:query} , {$set:{
+        title: title,
+        description: description,
+        date:now,
+        user:user
+    }})
+    // const data = await Note.findOne({_id:query})
+            res.status(200).json({
+                data
+            }) 
+    //console.log(data)
+})
 
-
+router.delete("/deleteAll", async (req,res) => {
+    const user = req.user
+    console.log(user)
+    await Note.deleteMany({user:user})
+})
 module.exports = router
