@@ -10,7 +10,13 @@ const secret = "assignment"
 const router = express.Router()
 router.use(express.json())
 router.use(fileupload())
-router.use(cors())
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
+ 
+ router.use(cors(corsOptions)) 
 
 
 router.post("/register" ,

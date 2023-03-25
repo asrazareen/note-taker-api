@@ -1,11 +1,18 @@
 const express = require("express")
 const fileupload = require("express-fileupload")
 const Note = require("../models/note")
-
+const cors = require("cors")
 const router = express.Router()
 router.use(express.json())
 router.use(fileupload())
 
+const corsOptions ={
+    origin:'*', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200,
+ }
+ 
+ router.use(cors(corsOptions)) 
 
 router.post("/", async (req, res) => {
     try {
